@@ -21,9 +21,16 @@ namespace ConsoleApplication
         }
 
         [HttpGet("{id}")]
-        public Product Get(int id)
+        public IActionResult Get(int id)
         {
-            return _products.SingleOrDefault(p => p.Id == id);
+            var product = _products.SingleOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
         }
     }
 }
